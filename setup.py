@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name="psman",
     packages=["psman"],
-    version="1.0.0.0",
+    version="1.1.0.0",
     description="Toolbox for process manipulating",
     author="Chesham",
     author_email="c.moweb@gmail.com",

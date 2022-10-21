@@ -11,7 +11,7 @@ from .logger import logger
 
 
 _prog = "psman"
-_version = "1.0.0"
+_version = "1.1.0"
 
 
 def iter_process():
@@ -83,6 +83,7 @@ def main():
         )
 
     #  Iterate over processes
+    count = 0
     for p in iter_process():
         try:
             if action:
@@ -94,10 +95,15 @@ def main():
                 else:
                     logger.info(f"{action.__name__}({p.pid}) in {datetime.now() - sw}")
             else:
-                logger.info(f"[{p.username()}] {p.pid} {p.name()}")
+                logger.info(
+                    f"[{p.username()}] {p.pid} {p.name()} \"{' '.join(p.cmdline())}\""
+                )
         except psutil.AccessDenied as e:
             logger.error("need privileges", exc_info=1)
             break
+        finally:
+            count += 1
+    logger.info(f"total {count} process{('es' if count > 1 else '')} found")
 
 
 __all__ = [
